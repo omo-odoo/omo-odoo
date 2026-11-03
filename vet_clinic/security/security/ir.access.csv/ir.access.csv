@@ -1,0 +1,8 @@
+id,name,model_id,group_id/id,operation,domain
+access_vet_species,vet.species,vet.species,base.group_user,crud,
+access_vet_breed,vet.breed,vet.breed,base.group_user,crud,
+access_vet_vaccine,vet.vaccine,vet.vaccine,base.group_user,crud,
+access_vet_animal,vet.animal,vet.animal,base.group_user,crud,
+access_vet_vaccination,vet.vaccination,vet.vaccination,base.group_user,crud,
+access_vet_consultation,vet.consultation,vet.consultation,base.group_user,crud,
+access_vet_consultation_line,vet.consultation.line,vet.consultation.line,base.group_user,crud,
