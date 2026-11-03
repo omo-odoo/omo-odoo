@@ -134,11 +134,10 @@
         <field name="name">vet.consultation.calendar</field>
         <field name="model">vet.consultation</field>
         <field name="arch" type="xml">
-            <calendar date_start="date" date_delay="duration" color="veterinarian_id" mode="week" quick_create="0">
+            <calendar string="Consultations" date_start="date" color="veterinarian_id">
                 <field name="animal_id"/>
                 <field name="owner_id"/>
                 <field name="consultation_type"/>
-                <field name="veterinarian_id" filters="1"/>
             </calendar>
         </field>
     </record>
