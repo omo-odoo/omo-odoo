@@ -1,8 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_vet_species,vet.species,model_vet_species,base.group_user,1,1,1,1
-access_vet_breed,vet.breed,model_vet_breed,base.group_user,1,1,1,1
-access_vet_vaccine,vet.vaccine,model_vet_vaccine,base.group_user,1,1,1,1
-access_vet_animal,vet.animal,model_vet_animal,base.group_user,1,1,1,1
-access_vet_vaccination,vet.vaccination,model_vet_vaccination,base.group_user,1,1,1,1
-access_vet_consultation,vet.consultation,model_vet_consultation,base.group_user,1,1,1,1
-access_vet_consultation_line,vet.consultation.line,model_vet_consultation_line,base.group_user,1,1,1,1
