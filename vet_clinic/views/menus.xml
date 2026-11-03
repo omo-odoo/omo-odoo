@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_vet_root" name="Clinique vétérinaire" web_icon="vet_clinic,static/description/icon.png" sequence="30"/>
+
+    <menuitem id="menu_vet_patients" name="Patients" parent="menu_vet_root" sequence="10"/>
+    <menuitem id="menu_vet_animals" name="Animaux" parent="menu_vet_patients" action="vet_animal_action" sequence="10"/>
+    <menuitem id="menu_vet_owners" name="Propriétaires" parent="menu_vet_patients" action="vet_owner_action" sequence="20"/>
+
+    <menuitem id="menu_vet_care" name="Soins" parent="menu_vet_root" sequence="20"/>
+    <menuitem id="menu_vet_consultations" name="Consultations" parent="menu_vet_care" action="vet_consultation_action" sequence="10"/>
+    <menuitem id="menu_vet_to_invoice" name="À facturer" parent="menu_vet_care" action="vet_consultation_to_invoice_action" sequence="20"/>
+    <menuitem id="menu_vet_vaccinations" name="Vaccinations" parent="menu_vet_care" action="vet_vaccination_action" sequence="30"/>
+    <menuitem id="menu_vet_reminders" name="Rappels à prévoir" parent="menu_vet_care" action="vet_vaccination_reminder_action" sequence="40"/>
+
+    <menuitem id="menu_vet_config" name="Configuration" parent="menu_vet_root" sequence="90"/>
+    <menuitem id="menu_vet_species" name="Espèces et races" parent="menu_vet_config" action="vet_species_action" sequence="10"/>
+    <menuitem id="menu_vet_vaccines" name="Vaccins" parent="menu_vet_config" action="vet_vaccine_action" sequence="20"/>
+</odoo>

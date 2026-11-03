@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_consultation" model="ir.actions.report">
+        <field name="name">Compte rendu de consultation</field>
+        <field name="model">vet.consultation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">vet_clinic.report_consultation</field>
+        <field name="report_file">vet_clinic.report_consultation</field>
+        <field name="print_report_name">'Compte rendu - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_vet_consultation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_consultation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Compte rendu de consultation <span t-field="o.name"/></h2>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-6">
+                                <strong>Animal :</strong> <span t-field="o.animal_id.name"/> (<span t-field="o.animal_id.reference"/>)<br/>
+                                <strong>Espèce / race :</strong> <span t-field="o.animal_id.species_id.name"/>
+                                <t t-if="o.animal_id.breed_id"> · <span t-field="o.animal_id.breed_id.name"/></t><br/>
+                                <strong>Âge :</strong> <span t-out="o.animal_id.age or '-'"/><br/>
+                                <strong>Propriétaire :</strong> <span t-field="o.owner_id.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Date :</strong> <span t-field="o.date"/><br/>
+                                <strong>Vétérinaire :</strong> <span t-field="o.veterinarian_id.name"/><br/>
+                                <strong>Type :</strong> <span t-field="o.consultation_type"/><br/>
+                                <strong>Motif :</strong> <span t-field="o.reason"/>
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <tr><th>Poids</th><td><span t-field="o.weight"/> kg</td><th>Température</th><td><span t-field="o.temperature"/> °C</td></tr>
+                        </table>
+                        <h5>Symptômes</h5>
+                        <p t-field="o.symptoms"/>
+                        <h5>Diagnostic</h5>
+                        <p t-field="o.diagnosis"/>
+                        <h5>Traitement / prescription</h5>
+                        <p t-field="o.treatment"/>
+                        <t t-if="o.vaccination_ids">
+                            <h5>Vaccins administrés</h5>
+                            <ul>
+                                <li t-foreach="o.vaccination_ids" t-as="v">
+                                    <span t-field="v.vaccine_id.name"/> (lot <span t-out="v.batch_number or '-'"/>), prochain rappel le <span t-field="v.next_date"/>
+                                </li>
+                            </ul>
+                        </t>
+                        <t t-if="o.line_ids">
+                            <h5>Actes et produits</h5>
+                            <table class="table table-sm">
+                                <thead><tr><th>Description</th><th class="text-end">Qté</th><th class="text-end">Prix</th><th class="text-end">Sous-total</th></tr></thead>
+                                <tbody>
+                                    <tr t-foreach="o.line_ids" t-as="l">
+                                        <td><span t-field="l.name"/></td>
+                                        <td class="text-end"><span t-field="l.quantity"/></td>
+                                        <td class="text-end"><span t-field="l.price_unit"/></td>
+                                        <td class="text-end"><span t-field="l.subtotal"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-end"><strong>Total HT : <span t-field="o.amount_total"/></strong></p>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Espèces -->
+    <record id="species_dog" model="vet.species"><field name="name">Chien</field></record>
+    <record id="species_cat" model="vet.species"><field name="name">Chat</field></record>
+    <record id="species_rabbit" model="vet.species"><field name="name">Lapin</field></record>
+    <record id="species_horse" model="vet.species"><field name="name">Cheval</field></record>
+    <record id="species_nac" model="vet.species"><field name="name">NAC (autre)</field></record>
+
+    <!-- Races -->
+    <record id="breed_labrador" model="vet.breed"><field name="name">Labrador</field><field name="species_id" ref="species_dog"/></record>
+    <record id="breed_berger_allemand" model="vet.breed"><field name="name">Berger allemand</field><field name="species_id" ref="species_dog"/></record>
+    <record id="breed_bouledogue" model="vet.breed"><field name="name">Bouledogue français</field><field name="species_id" ref="species_dog"/></record>
+    <record id="breed_croise_chien" model="vet.breed"><field name="name">Croisé</field><field name="species_id" ref="species_dog"/></record>
+    <record id="breed_europeen" model="vet.breed"><field name="name">Européen</field><field name="species_id" ref="species_cat"/></record>
+    <record id="breed_maine_coon" model="vet.breed"><field name="name">Maine Coon</field><field name="species_id" ref="species_cat"/></record>
+    <record id="breed_siamois" model="vet.breed"><field name="name">Siamois</field><field name="species_id" ref="species_cat"/></record>
+    <record id="breed_belier" model="vet.breed"><field name="name">Bélier</field><field name="species_id" ref="species_rabbit"/></record>
+    <record id="breed_selle_francais" model="vet.breed"><field name="name">Selle français</field><field name="species_id" ref="species_horse"/></record>
+
+    <!-- Vaccins -->
+    <record id="vaccine_chppil" model="vet.vaccine">
+        <field name="name">CHPPiL (chien)</field>
+        <field name="validity_months">12</field>
+        <field name="species_ids" eval="[(6, 0, [ref('species_dog')])]"/>
+    </record>
+    <record id="vaccine_rage" model="vet.vaccine">
+        <field name="name">Rage</field>
+        <field name="validity_months">36</field>
+        <field name="species_ids" eval="[(6, 0, [ref('species_dog'), ref('species_cat'), ref('species_horse')])]"/>
+    </record>
+    <record id="vaccine_typhus_coryza" model="vet.vaccine">
+        <field name="name">Typhus / Coryza (chat)</field>
+        <field name="validity_months">12</field>
+        <field name="species_ids" eval="[(6, 0, [ref('species_cat')])]"/>
+    </record>
+    <record id="vaccine_myxo" model="vet.vaccine">
+        <field name="name">Myxomatose / VHD (lapin)</field>
+        <field name="validity_months">12</field>
+        <field name="species_ids" eval="[(6, 0, [ref('species_rabbit')])]"/>
+    </record>
+    <record id="vaccine_grippe_equine" model="vet.vaccine">
+        <field name="name">Grippe / Tétanos (cheval)</field>
+        <field name="validity_months">12</field>
+        <field name="species_ids" eval="[(6, 0, [ref('species_horse')])]"/>
+    </record>
+</odoo>
