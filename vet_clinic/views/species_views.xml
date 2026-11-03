@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Espèces -->
+    <record id="vet_species_view_list" model="ir.ui.view">
+        <field name="name">vet.species.list</field>
+        <field name="model">vet.species</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="animal_count" string="Animaux"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vet_species_view_form" model="ir.ui.view">
+        <field name="name">vet.species.form</field>
+        <field name="model">vet.species</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                    <field name="breed_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vet_species_action" model="ir.actions.act_window">
+        <field name="name">Espèces et races</field>
+        <field name="res_model">vet.species</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Vaccins -->
+    <record id="vet_vaccine_view_list" model="ir.ui.view">
+        <field name="name">vet.vaccine.list</field>
+        <field name="model">vet.vaccine</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="species_ids" widget="many2many_tags"/>
+                <field name="validity_months"/>
+                <field name="product_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vet_vaccine_action" model="ir.actions.act_window">
+        <field name="name">Vaccins</field>
+        <field name="res_model">vet.vaccine</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

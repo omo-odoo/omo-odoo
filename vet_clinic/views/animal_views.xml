@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vet_animal_view_form" model="ir.ui.view">
+        <field name="name">vet.animal.form</field>
+        <field name="model">vet.animal</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_deceased" type="object" string="Déclarer le décès"
+                            invisible="state == 'deceased'"
+                            confirm="Confirmer le décès de cet animal ?"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_consultations" type="object" class="oe_stat_button" icon="fa-stethoscope">
+                            <field name="consultation_count" widget="statinfo" string="Consultations"/>
+                        </button>
+                        <button name="action_view_vaccinations" type="object" class="oe_stat_button" icon="fa-medkit">
+                            <field name="vaccination_count" widget="statinfo" string="Vaccins"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Décédé" bg_color="text-bg-secondary" invisible="state != 'deceased'"/>
+                    <widget name="web_ribbon" title="Vaccins en retard" bg_color="text-bg-danger" invisible="vaccine_status != 'late' or state == 'deceased'"/>
+                    <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="ex. Rex"/></h1>
+                        <field name="reference" readonly="1"/>
+                    </div>
+                    <group>
+                        <group string="Identité">
+                            <field name="owner_id"/>
+                            <field name="species_id"/>
+                            <field name="breed_id"/>
+                            <field name="sex"/>
+                            <field name="neutered"/>
+                            <field name="color"/>
+                        </group>
+                        <group string="Santé">
+                            <field name="birth_date"/>
+                            <field name="age"/>
+                            <field name="weight"/>
+                            <field name="microchip"/>
+                            <field name="vaccine_status" widget="badge"
+                                   decoration-success="vaccine_status == 'ok'"
+                                   decoration-warning="vaccine_status == 'soon'"
+                                   decoration-danger="vaccine_status == 'late'"/>
+                            <field name="death_date" invisible="state != 'deceased'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Consultations" name="consultations">
+                            <field name="consultation_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="consultation_type"/>
+                                    <field name="reason"/>
+                                    <field name="veterinarian_id"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Vaccinations" name="vaccinations">
+                            <field name="vaccination_ids">
+                                <list editable="bottom">
+                                    <field name="vaccine_id"/>
+                                    <field name="date"/>
+                                    <field name="next_date"/>
+                                    <field name="batch_number"/>
+                                    <field name="veterinarian_id"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'valid'"
+                                           decoration-warning="state == 'due_soon'"
+                                           decoration-danger="state == 'expired'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Allergies et notes" name="notes">
+                            <group>
+                                <field name="allergies"/>
+                            </group>
+                            <field name="notes" placeholder="Antécédents, comportement, traitements chroniques…"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="vet_animal_view_list" model="ir.ui.view">
+        <field name="name">vet.animal.list</field>
+        <field name="model">vet.animal</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'deceased'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="species_id"/>
+                <field name="breed_id" optional="show"/>
+                <field name="owner_id"/>
+                <field name="age" optional="show"/>
+                <field name="weight" optional="hide"/>
+                <field name="vaccine_status" widget="badge"
+                       decoration-success="vaccine_status == 'ok'"
+                       decoration-warning="vaccine_status == 'soon'"
+                       decoration-danger="vaccine_status == 'late'"/>
+                <field name="state" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vet_animal_view_kanban" model="ir.ui.view">
+        <field name="name">vet.animal.kanban</field>
+        <field name="model">vet.animal</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card" class="flex-row">
+                        <aside class="o_kanban_aside_full">
+                            <field name="image_128" widget="image" class="o_kanban_image_fill w-100" alt="Photo"/>
+                        </aside>
+                        <main class="ms-2">
+                            <field name="name" class="fw-bold fs-5"/>
+                            <div>
+                                <field name="species_id"/> · <field name="breed_id"/>
+                            </div>
+                            <div class="text-muted">
+                                <i class="fa fa-user me-1" title="Propriétaire"/><field name="owner_id"/>
+                            </div>
+                            <footer>
+                                <field name="age"/>
+                                <field name="vaccine_status" widget="badge" class="ms-auto"
+                                       decoration-success="vaccine_status == 'ok'"
+                                       decoration-warning="vaccine_status == 'soon'"
+                                       decoration-danger="vaccine_status == 'late'"/>
+                            </footer>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="vet_animal_view_search" model="ir.ui.view">
+        <field name="name">vet.animal.search</field>
+        <field name="model">vet.animal</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="owner_id"/>
+                <field name="microchip"/>
+                <field name="species_id"/>
+                <filter name="alive" string="Vivants" domain="[('state', '=', 'alive')]"/>
+                <filter name="deceased" string="Décédés" domain="[('state', '=', 'deceased')]"/>
+                <separator/>
+                <filter name="archived" string="Archivés" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_species" string="Espèce" context="{'group_by': 'species_id'}"/>
+                    <filter name="group_owner" string="Propriétaire" context="{'group_by': 'owner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="vet_animal_action" model="ir.actions.act_window">
+        <field name="name">Animaux</field>
+        <field name="res_model">vet.animal</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_alive': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Enregistrez votre premier patient à quatre pattes</p>
+            <p>Chaque animal est rattaché à un propriétaire et garde l'historique de ses consultations et vaccins.</p>
+        </field>
+    </record>
+</odoo>

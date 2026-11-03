@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_vet_animal" model="ir.sequence">
+        <field name="name">Animal</field>
+        <field name="code">vet.animal</field>
+        <field name="prefix">ANI-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_vet_consultation" model="ir.sequence">
+        <field name="name">Consultation vétérinaire</field>
+        <field name="code">vet.consultation</field>
+        <field name="prefix">CONS/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

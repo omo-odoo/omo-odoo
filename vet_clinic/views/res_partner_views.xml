@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_vet" model="ir.ui.view">
+        <field name="name">res.partner.form.vet</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_animals" type="object" class="oe_stat_button" icon="fa-paw">
+                    <field name="animal_count" widget="statinfo" string="Animaux"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="vet_owner_action" model="ir.actions.act_window">
+        <field name="name">Propriétaires</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('animal_ids', '!=', False)]</field>
+    </record>
+</odoo>
