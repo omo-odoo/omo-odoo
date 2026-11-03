@@ -5,7 +5,6 @@
         <field name="model">vet.consultation</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">vet_clinic.report_consultation</field>
-        <field name="report_file">vet_clinic.report_consultation</field>
         <field name="print_report_name">'Compte rendu - %s' % object.name</field>
         <field name="binding_model_id" ref="model_vet_consultation"/>
         <field name="binding_type">report</field>
